@@ -42,31 +42,30 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: BlocListener<CounterCubit, CounterState>(
-        listener: (context, state) {
-          if(state.actionType == 'increment'){
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content: Text('You incremented a value!')
-                )
-            );
-          }
-          if(state.actionType == 'decrement'){
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                      content: Text('You decremented a value!')
-                  )
-             );
-          }
-        },
-        child: Center(
-          child: Column(
+      body: Center(
+        child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Text(
                 'You have pushed the button this many times:',
               ),
-              BlocBuilder<CounterCubit, CounterState>(
+              BlocConsumer<CounterCubit, CounterState>(
+                listener: (context, state) {
+                  if(state.actionType == 'increment'){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('You incremented a value!')
+                        )
+                    );
+                  }
+                  if(state.actionType == 'decrement'){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('You decremented a value!')
+                        )
+                    );
+                  }
+                },
                 builder: (context, state) {
                   return Text(
                     '${state.counterValue}',
@@ -99,7 +98,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-      ),
     );
   }
 }
